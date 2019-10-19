@@ -1,0 +1,31 @@
+{
+  "name": "ambulance-ping",
+  "version": "1.0.0",
+  "description": "An ambulance alert system.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gaharavara/ambulance-ping.git"
+  },
+  "keywords": [
+    "Ambulance",
+    "alert",
+    "ping",
+    "google",
+    "navigation\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[Con\u001b[C\u001b[C\u001b[C\u001b\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[Cnavigation",
+    "system"
+  ],
+  "author": "Team Last Commit\u001b[D\u001b[C",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gaharavara/ambulance-ping/issues"
+  },
+  "homepage": "https://github.com/gaharavara/ambulance-ping#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^2.3.0"
+  }
+}
