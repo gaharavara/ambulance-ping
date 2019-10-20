@@ -23,30 +23,11 @@
         socket.on('chat message', function (msg) {
             $('#messages').append($('<li>').text(msg));
         });
-
+ var alert_path;
         socket.on('client', function (msg) {
+            alert_path = msg;
             $('#messages').append($('<li>').text(msg));
         });
-       
-
-
-
-
-
-
-
-
-
-
-
-
-
-        $(function () {
-        var socket = io();
-       
-        socket.on('chat message', function (msg) {
-            $('#messages').append($('<li>').text(msg));
-        }); 
 
 
         
@@ -174,16 +155,26 @@ var res;
 
             if (index < ar.length){
                 marker.setPosition( new google.maps.LatLng(ar[index], ar[index+1+j]) );
-                console.log(marker.getPosition().lat()+','+marker.getPosition().lng());
+                // console.log(marker.getPosition().lat()+','+marker.getPosition().lng());
                 
                 while(j< 10 && index+j+1<ar.length){
                     //marker.setPosition( new google.maps.LatLng(ar[index+j], ar[index+1+j]) );
                     min_arr.push(ar[index+j], ar[index+1+j]);
                     j = j + 2;
                 }
-                console.log("server.js");
-                console.log(min_arr);
-                socket.emit('client', min_arr);
+                // console.log("server.js");
+                // console.log(min_arr);
+                for(i = 0;i<=min_arr.length;i+=2){
+                    for(j=0;j<=alert_path.length;j++){
+                        console.log("min_arr");
+                        console.log(min_arr);
+                        console.log("alert_arr");
+                        console.log(alert_path);
+                        if(min_arr[i]==alert_path[j]&&min_arr[i+1]==alert_path[j+1]){
+                            console.log("Collision NNNN");
+                        }
+                    }
+                }
 
                
                 //getDistance(marker.getPosition().lat(), marker.getPosition().lng());
@@ -198,7 +189,6 @@ var res;
 }
 var a1 = ret();
 setTimeout(function(){console.log(a1);}, 1000);
-});
     </script>
   </body>
 </html>
