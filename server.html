@@ -1,33 +1,37 @@
 <!doctype html>
 <html>
   <head>
-    <title>User Prototype</title>
+    <title>Ambulance Alert ( Server )</title>
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
-     #map-canvas {
-         width: 500px;
-         height: 500px;
-     }
+      body { font: 13px Helvetica, Arial; }
+      
+      #map-canvas {
+        width: 500px;
+        height: 500px;
+      }
     </style>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4A9x0LSscb8LCa48LY5FUCiM65RvtacA&library=places"
     type="text/javascript"></script>
   </head>
   <body>
-    <div id="map-canvas"></div>  
+    <div id="map-canvas"></div>
     <ul id="messages"></ul>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
+       $(function () {
         var socket = io();
-    
+        $('form').submit(function (e) {
+            e.preventDefault();
+            socket.emit('chat message', $('#m').val());
+            $('#m').val('');
+            return false;
+        });
+       
         socket.on('chat message', function (msg) {
             $('#messages').append($('<li>').text(msg));
-        });
-        var alert_path;
-        socket.on('client', function (msg) {
-            alert_path = msg;
-            $('#messages').append($('<li>').text(msg));
-        });
+        }); 
 
 
         
@@ -76,7 +80,6 @@ var res;
             directionsDisplay.setDirections(response);  //displaying route
             //console.log(response);
             console.log('1');
-            //document.getElementById('Gresponse').innerHTML = JSON.stringify(response);
 
             //console.log(a);
             createPolyline(response, callback);
@@ -91,7 +94,7 @@ var res;
 
 
     function createPolyline(directionResult, callback) {
-        //console.log(directionResult);
+
 
         line = null;
         var legs = directionResult.routes[0].legs;
@@ -110,7 +113,7 @@ var res;
             offset: '100%'
           }]
         });
-        //console.log(legs);
+        console.log(legs);
         for (i = 0; i < legs.length; i++) {
             var steps = legs[i].steps;
             for (j = 0; j < steps.length; j++) {
@@ -155,38 +158,22 @@ var res;
 
             if (index < ar.length){
                 marker.setPosition( new google.maps.LatLng(ar[index], ar[index+1+j]) );
+                console.log(marker.getPosition().lat()+','+marker.getPosition().lng());
                 
                 while(j< 10 && index+j+1<ar.length){
                     //marker.setPosition( new google.maps.LatLng(ar[index+j], ar[index+1+j]) );
                     min_arr.push(ar[index+j], ar[index+1+j]);
                     j = j + 2;
                 }
-
-                var flag = 1;
-                for(i = 0;i<=min_arr.length;i+=2){
-                    for(j=0;j<=alert_path.length;j++){
-                        //console.log("min_arr");
-                        //console.log(min_arr);
-                        //console.log("alert_arr");
-                        //console.log(alert_path);
-                        if(min_arr[i]==alert_path[j]&&min_arr[i+1]==alert_path[j+1]){
-
-                            console.log("Collision NNNN");
-                            flag=0;
-                            break;
-                        }
-                    }
-
-                    if(flag==0){
-                        break;
-                    }
-                }
+                console.log("server.js");
+                console.log(min_arr);
+                socket.emit('client', min_arr);
 
                
                 //getDistance(marker.getPosition().lat(), marker.getPosition().lng());
                 index = index + 2;
             }
-          }, 400)
+          }, 200)
 
         };
 
@@ -194,9 +181,8 @@ var res;
 
 }
 var a1 = ret();
-setTimeout(function(){
-    //console.log(a1);
-}, 1000);
+setTimeout(function(){console.log(a1);}, 1000);
+});
     </script>
   </body>
 </html>
